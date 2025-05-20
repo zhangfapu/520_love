@@ -26,23 +26,69 @@
       max-width: 350px;
     }
     .love {
-      font-size: 2.2rem;
-      color: #ff4b7d;
-      margin-bottom: 12px;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
+        font-size: 3.2em;
+        background-image: linear-gradient(135deg, #ff6b6b 30%, #4ecdc4 70%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        animation: gradientFlow 6s ease infinite;
+        margin-bottom: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        font-family: '幼圆','Comic Sans MS','华康圆体', cursive;
+    text-shadow: 3px 3px 6px rgba(255,107,107,0.3);
+    animation: gradientFlow 6s ease infinite, floatText 2s ease-in-out infinite alternate;
+      }
+      
+      .peacock-feather {
+        position: absolute;
+        width: 80px;
+        opacity: 0.8;
+        animation: featherFloat 8s ease-in-out infinite;
+      }
+      @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes featherFloat {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-40px) rotate(15deg); }
+      }
     .btn {
-      background: #ff4b7d;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 12px 32px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      margin-top: 18px;
-      transition: background 0.2s;
-    }
+  background: #ff4b7d;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 18px;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+}
+.btn:hover {
+  transform: rotateY(15deg) rotateX(10deg) translateZ(20px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 10%, transparent 70%);
+  animation: starlight 3s linear infinite;
+}
+@keyframes starlight {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
     .btn:hover {
       background: #ff7fae;
     }
@@ -80,7 +126,7 @@
     <style>
       body {
         background: linear-gradient(120deg, #ffe0e9 0%, #fff1eb 100%),
-                    url('https://cdn.pixabay.com/photo/2017/06/20/19/22/yunnan-2426926_1280.jpg'); /* 云南风景图直链 */
+                    url('https://res.cloudinary.com/demo/image/upload/v1716278161/kunming_scene.jpg'); /* 使用Cloudinary图床服务 */
         background-size: cover;
         background-attachment: fixed;
         animation: bgmove 20s linear infinite alternate;
@@ -102,11 +148,48 @@
         100% { transform: translateY(0) rotate(360deg); }
       }
     </style>
-    <!-- 粒子动画容器 -->
+    <!-- 星空粒子动画容器 -->
+<div id="starry-sky"></div>
+<style>
+  #starry-sky {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+  }
+  
+  .star {
+    position: absolute;
+    background: rgba(255,255,255,0.8);
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    animation: twinkle 1.5s infinite alternate;
+  }
+  
+  @keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+</style>
+<script>
+  function createStars() {
+    const container = document.getElementById('starry-sky');
+    for(let i=0; i<200; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random()*100}%`;
+      star.style.top = `${Math.random()*100}%`;
+      star.style.animationDelay = `${Math.random()*1.5}s`;
+      container.appendChild(star);
+    }
+  }
+  window.addEventListener('load', createStars);
+</script>
     <canvas id="particles" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1;pointer-events:none;"></canvas>
     <!-- 蝴蝶动画 -->
-    <img src="https://cdn.pixabay.com/photo/2017/01/06/19/15/butterfly-1959828_1280.png" class="butterfly" style="top:10vh;left:20vw;animation-delay:0s;">
-    <img src="https://cdn.pixabay.com/photo/2017/01/06/19/15/butterfly-1959828_1280.png" class="butterfly" style="top:30vh;left:60vw;animation-delay:2s;transform:scaleX(-1);">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Butterfly_icon_%28Noun_Project%29.png" class="butterfly" style="top:10vh;left:20vw;animation-delay:0s;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Butterfly_icon_%28Noun_Project%29.png" class="butterfly" style="top:30vh;left:60vw;animation-delay:2s;transform:scaleX(-1);">
     <!-- 花瓣动画容器 -->
     <div id="petals"></div>
     <div class="love">蓉蓉，距离挡不住思念</div>
@@ -184,16 +267,21 @@
 
     // 情话数组，融合云南与异地思念元素
     const messages = [
-      "蓉蓉，遇见你，是我今生最美的风景。",
-      "你在云南的每一天，都是我心头的牵挂。",
-      "苍山的云捎去我的思念，洱海的风带来你的气息。",
-      "玉龙雪山见证，我愿为你融化所有冰雪。",
-      "隔着屏幕，也能感受到你在大理的微笑。",
-      "想念是落在昆明湖面的月光，夜夜荡漾。",
-      "你是我心中的风花雪月，梦中的蝴蝶泉边。",
-      "等重逢时，我要在丽江古城牵你的手走遍每块石板。",
-      "等见面那天，我要把攒了四季的思念开成昆明的花海。",
-      "山海可平，距离可越，唯有爱你不变。"
+      "滇池边的风都是甜的，就像想你的心情",
+      "翠湖的海鸥盘旋三周，只为传递我的早安问候",
+      "金马碧鸡坊的灯火，不及你眼中的星光",
+      "大观楼长联写不尽，我对蓉蓉的思念",
+      "云南米线的柔，不如你给我的温柔",
+      "西山睡美人的轮廓，是我心中你的模样",
+      "圆通山的樱花雨，是我们相遇的序曲",
+      "海埂大坝的风筝线，牵着我们的未来",
+      "官渡古镇的夕阳，把我们的影子刻在金刚塔下",
+      "斗南花市的玫瑰，不及你笑容的娇艳",
+      "盘龙江的流水，带着我的思念去大理",
+      "民族村的歌舞，是我们爱情的伴奏",
+      "教场中路的蓝花楹，见证我们的浪漫",
+      "西山龙门的高度，丈量不出我爱你的深度",
+      "抚仙湖的水晶，纯净如你给我的真心"
     ];
     function showLove() {
       const msg = messages[Math.floor(Math.random() * messages.length)];
