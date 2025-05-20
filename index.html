@@ -76,24 +76,48 @@
 </head>
 <body>
   <div class="center-box">
-    <div class="love">520，爱你每一天！</div>
-    <div>亲爱的，今天是520，想对你说：</div>
-    <button class="btn" onclick="showLove()">点我获取专属情话</button>
+    <title>蓉蓉的520专属浪漫 | 苍山为盟 洱海为誓</title>
+    <style>
+      body {
+        background: linear-gradient(rgba(255,224,233,0.8), rgba(255,241,235,0.8)),
+                    url('https://example.com/yunnan-bg.jpg'); /* 云南风景图链接 */
+        background-size: cover;
+      }
+      
+      /* 新增蝴蝶动画 */
+      .butterfly {
+        position: fixed;
+        width: 40px;
+        animation: flutter 4s linear infinite;
+      }
+      @keyframes flutter {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-100px) rotate(180deg); }
+        100% { transform: translateY(0) rotate(360deg); }
+      }
+    </style>
+    <div class="love">蓉蓉，距离挡不住思念</div>
+    <div>亲爱的蓉蓉：
+      <br>此刻你在云南，远方的我仰望同一片星空。
+      <br>山海虽远，思念却如洱海的水，绵延不绝。
+      <br>愿风带去我的心声，愿云捎来你的笑容。
+    </div>
+    <button class="btn" onclick="showLove()">点开我的思念</button>
     <div class="message" id="loveMsg"></div>
   </div>
   <script>
-    // 情话数组
+    // 情话数组，融合云南与异地思念元素
     const messages = [
-      "遇见你，是我最美的意外。",
-      "你是我心中最亮的星。",
-      "和你在一起，每一天都像520。",
-      "我的世界因你而温柔。",
-      "你笑起来真好看。",
-      "想和你一起走过每一个520。",
-      "你是我心底最柔软的牵挂。",
-      "有你，平凡的日子也闪闪发光。",
-      "你是我永远的唯一。",
-      "爱你，是我做过最浪漫的事。"
+      "蓉蓉，遇见你，是我今生最美的风景。",
+      "你在云南的每一天，都是我心头的牵挂。",
+      "苍山的云捎去我的思念，洱海的风带来你的气息。",
+      "玉龙雪山见证，我愿为你融化所有冰雪。",
+      "隔着屏幕，也能感受到你在大理的微笑。",
+      "想念是落在昆明湖面的月光，夜夜荡漾。",
+      "你是我心中的风花雪月，梦中的蝴蝶泉边。",
+      "等重逢时，我要在丽江古城牵你的手走遍每块石板。",
+      "等见面那天，我要把攒了四季的思念开成昆明的花海。",
+      "山海可平，距离可越，唯有爱你不变。"
     ];
     function showLove() {
       const msg = messages[Math.floor(Math.random() * messages.length)];
