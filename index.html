@@ -130,6 +130,7 @@
         background-size: cover;
         background-attachment: fixed;
         animation: bgmove 20s linear infinite alternate;
+        font-family: 'Comic Sans MS', '幼圆', '华康圆体', cursive;
       }
       @keyframes bgmove {
         0% { background-position: 0% 0%; }
@@ -213,7 +214,7 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     function createParticle() {
-      const colors = ['#ffb6c1','#ffd700','#87cefa','#ff69b4','#fffacd'];
+      const colors = ['#ffb6c1','#ffd700','#87cefa','#ff69b4','#fffacd','#ff6347','#7fffd4'];
       return {
         x: Math.random()*canvas.width,
         y: Math.random()*canvas.height,
